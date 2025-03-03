@@ -1,0 +1,15 @@
+# Hidden directories
+.cache
+.cmake
+.config
+.gnupg
+.local
+.vscode-server
+.bash_history
+.bashrc
+.gitconfig
+.profile
+.wget-hsts
+
+# Docker volume
+shared/
