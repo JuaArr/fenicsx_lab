@@ -1,4 +1,4 @@
-# Hidden directories
+# Hidden directories or files
 .cache
 .cmake
 .config
@@ -10,6 +10,20 @@
 .gitconfig
 .profile
 .wget-hsts
+.gmshrc
+.lesshst
+.dotnet
+.fltk
 
 # Docker volume
 shared/
+
+# Dependent files
+examples/*/*.msh
+examples/*/*.npy
+examples/*/export/*.h5
+examples/*/export/*.xdmf
+examples/*/logs
+
+# Cache
+examples/*/__pycache__
