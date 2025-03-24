@@ -21,6 +21,10 @@ RUN apt-get update && \
     gawk \
     sed \
     coreutils \
+	libgl1 \
+    libglx-mesa0 \
+    libgl1-mesa-dri \
+    xvfb \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -57,6 +61,9 @@ RUN echo 'eval "$(starship init bash)"' >> /root/.bashrc
 
 # Ensure .local exists
 RUN mkdir -p /root/.local
+
+# Set enviroment for XDG_RUNTIME
+ENV XDG_RUNTIME_DIR=/tmp
 
 # Run as root (default in Docker)
 USER root
