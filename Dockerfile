@@ -47,11 +47,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Set default shell to bash
 ENV SHELL=/bin/bash
 
-# Copy the rest of the project files
-COPY . /root
-
-# Set working directory to /root
-WORKDIR /root
+# Set home directory and configuration
+ENV HOME=/root/fenicsx_lab
+COPY . ${HOME}
+WORKDIR ${HOME}
 
 # Pre-generate matplotlib font cache
 RUN MPLBACKEND=Agg python3 -c "import matplotlib.pyplot"
@@ -62,7 +61,7 @@ RUN echo 'eval "$(starship init bash)"' >> /root/.bashrc
 # Ensure .local exists
 RUN mkdir -p /root/.local
 
-# Set enviroment for XDG_RUNTIME
+# Set enviroment for XDG_RUNTIME (used by pyvista OFF_SCREEN)
 ENV XDG_RUNTIME_DIR=/tmp
 
 # Run as root (default in Docker)
