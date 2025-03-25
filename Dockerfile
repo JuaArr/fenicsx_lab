@@ -40,6 +40,9 @@ RUN python3 -m pip install -r /root/requirements.txt
 # Install starship for better shell prompt
 RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
+# Run as root (default in Docker)
+USER root
+
 # Set timezone to Berlin
 ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -52,17 +55,14 @@ ENV HOME=/root/fenicsx_lab
 COPY . ${HOME}
 WORKDIR ${HOME}
 
+# Set enviroment for XDG_RUNTIME (used by pyvista OFF_SCREEN)
+ENV XDG_RUNTIME_DIR=/tmp
+
 # Pre-generate matplotlib font cache
 RUN MPLBACKEND=Agg python3 -c "import matplotlib.pyplot"
 
 # Enable starship in bash
-RUN echo 'eval "$(starship init bash)"' >> /root/.bashrc
+RUN echo 'eval "$(starship init bash)"' >> ${HOME}/.bashrc
 
 # Ensure .local exists
-RUN mkdir -p /root/.local
-
-# Set enviroment for XDG_RUNTIME (used by pyvista OFF_SCREEN)
-ENV XDG_RUNTIME_DIR=/tmp
-
-# Run as root (default in Docker)
-USER root
+RUN mkdir -p ${HOME}/.local
