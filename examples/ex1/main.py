@@ -1,12 +1,8 @@
-import os
-import numpy as np
-from matplotlib import pyplot as plt
-
-os.environ['XDG_RUNTIME_DIR'] = '/tmp'
-
+import sys
 import subprocess
 from pathlib import Path
-import sys
+import numpy as np
+from matplotlib import pyplot as plt
 import pyvista as pv
 
 from mpi4py import MPI
@@ -83,7 +79,7 @@ ph = problem.solve()
 ph.name = 'pore pressure'
 
 # --- Extracting the flow velocity ---
-v_cg2 = bufl.element("P", mesh.topology.cell_name(), 2, shape=(dim, )) # v_cg1 = vector continuos galerkin, degree 2
+v_cg2 = bufl.element("P", mesh.topology.cell_name(), 2, shape=(dim, )) # v_cg2 = vector continuos galerkin, degree 2
 V = dlx.fem.functionspace(mesh, v_cg2)
 
 velocity_expr = -K*grad(ph)
